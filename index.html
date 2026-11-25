@@ -3,30 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard LP</title>
+
+  <!-- =========================================================
+       1. EDIT JUDUL TAB BROWSER & PRATINJAU LINK DI SINI
+       ========================================================= -->
+  <title>Dashboard LP - Portal</title>
+  <meta property="og:title" content="Dashboard LP - Portal">
+  <meta property="og:description" content="Buka aplikasi Dashboard LP di tab baru.">
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+      padding: 20px;
     }
-    iframe {
+    .card {
       width: 100%;
-      height: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+    p {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 12px;
       border: none;
-      display: block;
+      background: #0284c7;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+    .btn:hover {
+      background: #0369a1;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .status {
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      min-height: 18px;
     }
   </style>
 </head>
 <body>
-  <iframe 
-    src="https://script.google.com/macros/s/AKfycbxZvOENeqzkLdcnsV0fOfR-1Oi2HzlxQBgnCpxWAqazHzBWojVKgzSsRV_Ta-HRPuC_fg/exec" 
-    allow="geolocation; microphone; camera">
-  </iframe>
+
+  <div class="card">
+    <h1 id="portal-title">Dashboard LP - Portal</h1>
+    <p>Halaman portal ini tetap berada di GitHub Pages. Klik tombol di bawah untuk membuka aplikasi di tab baru.</p>
+    <button id="btn-open" type="button" class="btn">Buka Aplikasi di Tab Baru</button>
+    <div id="status-msg" class="status"></div>
+  </div>
+
+  <script>
+    // =========================================================
+    // 2. KONFIGURASI (EDIT TITLE & LINK APPS SCRIPT DI SINI)
+    // =========================================================
+    const CONFIG = {
+      title: "Dashboard LP - Portal",
+      targetUrl: "https://script.google.com/macros/s/AKfycbxZvOENeqzkLdcnsV0fOfR-1Oi2HzlxQBgnCpxWAqazHzBWojVKgzSsRV_Ta-HRPuC_fg/exec",
+      autoOpenOnLoad: true
+    };
+
+    document.title = CONFIG.title;
+    document.getElementById("portal-title").textContent = CONFIG.title;
+
+    const statusEl = document.getElementById("status-msg");
+    const btnOpen = document.getElementById("btn-open");
+
+    function openInNewTab() {
+      // noopener & noreferrer menjaga keamanan tab baru dan mencegah akses window.opener
+      const win = window.open(CONFIG.targetUrl, "_blank", "noopener,noreferrer");
+      if (win) {
+        statusEl.textContent = "Aplikasi dibuka di tab baru.";
+      } else {
+        statusEl.textContent = "Pop-up diblokir browser. Klik tombol di atas untuk membuka.";
+      }
+    }
+
+    btnOpen.addEventListener("click", openInNewTab);
+
+    if (CONFIG.autoOpenOnLoad) {
+      window.addEventListener("load", () => {
+        setTimeout(openInNewTab, 200);
+      });
+    }
+  </script>
+
 </body>
 </html>
